@@ -1,29 +1,30 @@
 #pragma once
 
-/* A Levensthein automaton (for the normal Levenshtein distance) 
-   maximum width of the automaton is limited by machine word size */
+/* A Levensthein automaton (for the normal Levenshtein distance)
+   maximum width is fixed (default/optimal: 64bits) */
 
+#include <bitset>
 #include <cstring>
 #include <cassert>
-#include <math.h>
 
-template<unsigned int max_distance, size_t N=64> struct fuzzy_nfa;
-
-template<unsigned int max_distance>
-struct fuzzy_nfa<max_distance,64> {
-    unsigned long long pattern[256];
+template<unsigned int Distance, size_t N=64>
+struct fuzzy_nfa {
+    std::bitset<N> pattern[256];
     unsigned short int width; 
     unsigned short int height;
 
+    enum { max_distance = Distance };
+
     fuzzy_nfa(const char* text, int dist = max_distance) 
-    : width(std::strlen(text)), height(dist), pattern()
+    : pattern(),  width(std::strlen(text)), height(dist)
     {
+	std::bitset<N> one = 1;
 	for(int i=0; i < width; ++i) 
-	    pattern[text[i]&0xFF] |= 1ULL << i;
+	    pattern[text[i]&0xFF] |= one << i;
     }
 
     struct state {
-	unsigned long long reg[max_distance+1];
+	std::bitset<N> reg[max_distance+1];
 
 	unsigned feed(const fuzzy_nfa& pattern, char c)
 	{ return pattern.feed(*this, c, *this); }
@@ -31,14 +32,16 @@ struct fuzzy_nfa<max_distance,64> {
 
     state start()
     {
+	std::bitset<N> pat;
+	std::bitset<N> const one = 1;
 	state s;
 	for(int i=0; i <= height; i++)
-	    s.reg[i] = (2ULL << i) - 1; 
+	    s.reg[i] = (pat = pat<<1 | one); 
 	return s;
     }
 
     bool accepts(const state& fsm, int dist) const
-    { return fsm.reg[dist] & 1ULL << width; }
+    { return fsm.reg[dist][width]; }
     bool accepts(const state& fsm) const
     { return accepts(fsm, height); }
 
@@ -50,91 +53,40 @@ struct fuzzy_nfa<max_distance,64> {
 	return row;
     }
 
-    int deterministic(const state& fsm) const 
+    bool deterministic(const state& fsm) const 
     {
-	unsigned long long const clip = (1ULL<<width+1)-1;
-	unsigned long long mask = fsm.reg[height]&clip;
-
-	return !(mask & mask-1);
-
-	return ((mask & 0xFFFFFFFF00000000ULL) != 0) << 5
-	     | ((mask & 0xFFFF0000FFFF0000ULL) != 0) << 4
-	     | ((mask & 0xFF00FF00FF00FF00ULL) != 0) << 3
-	     | ((mask & 0xF0F0F0F0F0F0F0F0ULL) != 0) << 2
-	     | ((mask & 0xCCCCCCCCCCCCCCCCULL) != 0) << 1
-	     | ((mask & 0xAAAAAAAAAAAAAAAAULL) != 0);
+	return fsm.reg[height].count() == 1;
     }
 
     unsigned eaten(const state& fsm, unsigned row=0) const
     {
-	unsigned long long const clip = (1ULL<<width+1)-1;
-	unsigned long long num  = fsm.reg[row]&clip;
-	
-	return ilogb(num);
+	for(int i=width; i >= 0; --i)
+	    if(fsm.reg[row][i]) return i;
+	return 0;
     }
 
-    unsigned min_pos(const state& fsm) const 
+    inline std::bitset<N> clip(std::bitset<N> bits) const
     {
-	unsigned long long const clip = (1ULL<<width+1)-1;
-	int row = 0;
-	for( ; row <= height; ++row) 
-	    if(fsm.reg[row]&clip) return row;
-	return row;
-    }
-
-    unsigned max_pos(const state& fsm) const
-    {
-	unsigned long long const clip = (1ULL<<width+1)-1;
-	unsigned long long mask = 0;
-
-	int row = height+1;
-	while(row > 0 && (fsm.reg[row-1]&clip)<<1 > mask) 
-	    mask = fsm.reg[--row]&clip;
-
-	return row;
-    }
-
-    unsigned best_pos(const state& fsm) const
-    {
-	#if 1
-	unsigned long long mask = (1ULL<<width+1)-1;
-	int row;
-	for(row=0; row < height; ++row) {
-	    unsigned long long reg = fsm.reg[row];
-	    mask &= ~(reg<<1 | reg);
-	    if(reg > (fsm.reg[row+1]&mask)) break;
-	}
-	
-	return row;
-	#else
-	unsigned long long const mask = (1ULL<<width+1)-1;
-	int row;
-	for(row=0; row < height; ++row) {
-	    if(row&mask) break;
-	}
-	return row;
-	#endif
+	return bits[width] = 0, bits;
     }
 
     unsigned feed(const state& fsm, char c, state& fsmnew) const
     {
-	unsigned long long const clip = (1ULL<<width+1)-1;
-	unsigned long long mask = pattern[c&0xFF];
-
-	unsigned long long const* reg = fsm.reg;
+	std::bitset<N> const& mask = pattern[c&0xFF];
+	std::bitset<N> const* reg = fsm.reg;
 
 	int i;
-	for(i=height; i>0 && (reg[i-1]&clip); --i) 
-	    fsmnew.reg[i] = (reg[i]&mask) << 1 | reg[i-1] | reg[i-1] << 1;
+	for(i=height; i>0 && (reg[i-1].any()); --i) 
+	    fsmnew.reg[i] = (reg[i]&mask) << 1 | reg[i-1] | clip(reg[i-1]) << 1;
 	fsmnew.reg[i] = (reg[i]&mask) << 1;
 
 	if(reg != fsmnew.reg) 
-	    for(int j=0; j < i; ++j) fsmnew.reg[j] = 0;
+	    for(int j=0; j < i; ++j) fsmnew.reg[j].reset();
 	reg = fsmnew.reg;
 
-	int const best = i + !(reg[i]&clip);
+	int const best = i + reg[i].none();
 	while(++i <= height)
-	    fsmnew.reg[i] |= reg[i-1] << 1;
+	    fsmnew.reg[i] |= clip(reg[i-1]) << 1;
 
 	return best;
     }
