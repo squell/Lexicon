@@ -21,8 +21,9 @@ without any warranty.
 #include <ctype.h>
 #include <limits.h>
 
+#ifndef DEFAULT_DISTANCE
 #define DEFAULT_DISTANCE 2
-#define FULLWORDS_ONLY 0
+#endif
 
 /* read the paper to understand the following three functions */
 
@@ -66,7 +67,7 @@ int scan_char(search_state row, char c)
 	row->Score++;
     else if(Mh & Cf) 
 	row->Score--;
-    #if FULLWORDS_ONLY
+    #ifdef FULLWORDS_ONLY
     Ph = Ph << 1 | 1;
     #else
     Ph <<= 1;
@@ -98,7 +99,6 @@ void scan_file(search_state state, int max_dist, FILE *input, const char* descr)
     while(fgets(buf, sizeof buf, input)) {
 	int prv_dist = max_dist+1;
 	int emit = 0;  /* used to report only the locally optimal matches */
-	int space = 1;
 	int i = 0;
 	char ch;
 
@@ -110,22 +110,26 @@ void scan_file(search_state state, int max_dist, FILE *input, const char* descr)
 		printf("%s:line %d; long input; skipping\n", descr, line_count);
 		return;
 	    }
-	    #if FULLWORDS_ONLY
-	    if(!isalnum(ch))
-	    #endif
+	    #ifdef FULLWORDS_ONLY
+	    if(!isalnum(ch)) {
+		if(prv_dist <= max_dist && emit) {
+		    printf("%s:line %d, distance %d\n", descr, line_count, prv_dist);
+		    emit_match(buf, i-1);
+		}
+		reset_search(state);
+		emit = 0;
+	    #else
 	    if(prv_dist < dist && prv_dist <= max_dist && emit) {
 		/* found a good match at previous position */
 		printf("%s:line %d, distance %d\n", descr, line_count, prv_dist);
 		emit_match(buf, i-1);
 		emit = 0;
-	    } else if(dist < prv_dist)
+	    #endif
+	    } else if(dist < prv_dist) {
 		emit = 1;
+	    }
 	    prv_dist = dist;
 	    i++;
-	    #if FULLWORDS_ONLY
-	    if(isspace(ch) && ++space > 1)
-		reset_search(state), space = 0;
-	    #endif
 	}
 
 	/* check if end of line should match */
