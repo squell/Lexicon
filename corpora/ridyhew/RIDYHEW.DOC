@@ -1,0 +1,209 @@
+
+RIDYHEW: The RIDiculouslY Huge English Wordlist.
+
+Web Release 1, 11 Jan 2003. 459,027 words in total.
+
+Copyright (c) 2003 Chris Street. You are hereby allowed by the author
+to redistribute these lists unchanged, provided that you also provide
+this documentation unchanged in your distribution. You may use these
+lists in published software projects provided this documentation is
+provided unchanged as part of your distribution.
+
+Up-to-date versions of the RIDYHEW list and associated utility programs
+may be downloaded from
+
+        http://www.codehappy.net/wordlist.htm
+
+------------ Introduction
+
+You think you know obscure English words? There are some in here that
+you've never heard of, for sure. Extracted from gigabytes of documents from
+around the World Wide Web. If you say RIDYHEW quickly, it sounds like
+"really damn huge". And that's what it is.
+
+------------ The RIDYHEW FAQ (acronym overload! Danger Will Robinson!)
+
+
+ * So, uh, why?
+
+Why does the sun shine? Why do the birds sing? Why do the voices keep
+speaking in my head?
+
+Seriously? For curiosity's sake, for playing word games and working 
+crosswords, for reveling in the beautiful miracle of language.... if you 
+have to ask. 
+
+ * How many words are in RIDYHEW?
+
+Right now, about 450,000. There are still a lot more words to find,
+though. Must collect more words! More words!
+
+ * What words are included in RIDYHEW? What words are excluded?
+
+Words which are eligible for inclusion in RIDYHEW:
+
+    - All common, uncapitalized nouns with plurals.
+    - All verbs with all legal inflections (including archaic inflections,
+        in the case of verbs current before the 18th century.) 
+    - All adjectives with comparative and superlative (except in a case where 
+        the comparative or superlative obviously does not apply.) 
+    - All other parts of speech, with a minimum length of two letters. 
+    - All spelling variants that can be well attested to in modern
+        literature, including British and U.S. variants. 
+    - Foreign words, if they have found widespread use in English. These
+        words are usually included with their original plurals/inflections
+        along with the Anglicized ones.     
+    - Compound words, if they have found demonstrated use without a hyphen.
+        Metric units with all legal prefixes and plurals. 
+
+Words which are not eligible for inclusion in RIDYHEW:
+
+    - Words that are generally found only capitalized: proper names,
+        trademarks, etc. 
+    - Contracted words, which are generally only found with an apostrophe. 
+    - Compound words that are generally only found with a hyphen. 
+    - Words of an over-specialized nature, for example, jargon from a small 
+        profession or trade. 
+    - Acronyms, except in the case where they have lost capitalization and are 
+        used as ordinary words with parts of speech (snafu, awol for example) 
+    - "Nonce" words, or words made up for an occasion which appear only a 
+        handful of times in literature 
+    - Foreign words which are rarely found in English literature or 
+        conversation. 
+    - Medical terms found only in Latin (with some exceptions.) 
+
+Note that this list is not expurgated beyond the above, which means it
+contains some pretty filthy and offensive words. Keep that in mind.
+
+ * What are the terms of use?
+
+Go ahead and use it in your commercial or non-commercial programming
+projects. All I ask is that you redistribute the original documentation 
+with RIDYHEW. 
+
+ * How do you make the list?
+
+First off, I used whatever public-domain word lists I could find off the 
+Internet to form a base. Notice that a lot of these lists didn't fit the 
+criteria I line out above, so they required extensive editing before I 
+could add them to RIDYHEW. If you've never gone over 100,000+ words one by 
+one looking for spelling errors and the like, well, you've simply never 
+lived.
+
+After that, what I did is I downloaded as many large text files, stories, 
+Usenet postings, web pages, and Word documents that I could find, 
+gigabytes of literature, extracted all of the words out of them, compared 
+them to RIDYHEW and spat out whatever wasn't found. 
+
+From there, I used automated tools to generate plurals for the nouns,
+inflections for the verbs, comperative/superlative for the adjectives, 
+etc. The words that were nonsense, misspelt, or otherwise ineligible for 
+the RIDYHEW list I saved in a filter list, so I would never see them again 
+in these output lists I edited. 
+
+Words used in the works of Shakespeare, Bacon, Milton, Dickens, Twain,
+Middleton, Alger, and many many others were reviewed in compiling the 
+lists, thanks to Project Gutenberg (they rock!) Frequencygrams were 
+created for unusual, uncommon and obsolete words used by the authors; 
+these were used to eliminate obvious nonce words. 
+
+I'm actually still going through these documents, and adding words to the
+list. I'm also actively weeding out errors (there are some) from the 
+RIDYHEW list.
+
+ * So this list is being actively maintained?
+
+Yes, it is, which makes it the longest such list available on the
+Internet. (Actually it's one of the longest word lists, period, on the 
+Internet.)
+
+Updated versions are available on the Internet at
+http://www.codehappy.net/wordlist.htm
+
+I'm adding new words from a large number of sources, and removing the 
+errors that have crept in. At the moment less than one-tenth of one 
+percent is bad, which is a lot lot better than any other list you'll find 
+this size. A lot more than 0.1% of the words are obscure, though, so be 
+warned. (What, you didn't think a list with half a million different words 
+wouldn't have some odd-balls? Hee-hee.) 
+
+ * What lists are available?
+
+Along with RIDYHEW, I have lists of given names (masculine and feminine),
+lists of surnames, (the last two based on the U.S. Census lists), and a
+long list of "never" words.
+
+ * "Never" words?
+
+Yep, "never" words. When I check a text document against the word
+dictionary, I also check it against a list full of junk that I "never" 
+want to see again in an output list. 
+
+What you'd find in the "never" list:
+
+   - A very large number of names (given names and surnames, from English and
+        many other languages) 
+   - Trademarks, of every different kind of thing you can imagine 
+   - Names of cities, countries, rivers, counties, provinces, astronomical 
+        landmarks, etc., etc. 
+   - Proper nouns of miscellaneous classification 
+   - All common misspellings of English words 
+   - HTML tags, Javascript tokens, XML tags, etc. 
+   - Keywords and common function calls in various programming languages 
+   - Nonce and non-words 
+   - Words without parts of speech 
+   - Thousands upon thousands of acronyms 
+   - Excessively technical or jargony words 
+   - Foreign words of all sort and description 
+   - File extensions, user names, handles, words run together, etc. 
+   - Any manner of assorted weird junk! 
+
+Compiled from gigabytes upon gigabytes of text files, Usenet messages, web
+      pages, etc. 
+
+------------ The files in the distribution(s)
+
+In all RIDYHEW distributions
+
+ridyhew.doc     This documentation file
+
+In the RIDYHEW main distribution
+
+MASTER          The master RIDYHEW word list.
+FIRSTF          Feminine given names.
+FIRSTM          Feminine masculine names.
+SURNAMES        Surnames.
+
+In the RIDYHEW "never" distribution
+
+NEVER           The "never" word list.
+
+In the RIDYHEW utilities distribution
+
+<My apologies for some of this source code. It's not commented,
+it wasn't meant for general consumption, and was written in a hurry.
+But if it's useful for you, great.>
+
+nojunk.c        Used to remove non-alphabetic characters from text files
+dictpar.c       Used to parse the public domain 1913 Webster's for goodies
+nodefs.c        Used to strip everything but the first word on a line
+split.c         Used to split a text file into two smaller files, on a line
+distrib.cxx     Shows the distribution of words (by first letter, length)
+                        and other interesting statistics
+encodel.cxx     Used to compress the dictionary (needs dict.cxx)
+dict.cxx        Implements a fancy-pants dictionary tree
+issort.cxx      Checks to see whether a text file is sorted
+makeweb.cxx     Creates a series of web pages listing all of the words
+                        in the RIDYHEW list, highlighted according to
+                        whether or not they appear in SOWPODS/ENABLE
+merge.cxx       Merges two sorted word lists
+notin.cxx       Determine what words in sorted list 2 aren't in sorted list 1
+remove.cxx      Removes the words in sorted list 2 from sorted list 1
+sortlist.cxx    Kind of silly (in memory) sort
+switch.cxx      Very useful automation tool. Allows automatic inflection
+                or pluralization of English words. Gets most of them right
+                and saves a lot of time in going through lists containing
+                thousands and thousands of words.
+units.cxx       Create all of the legal metric units from the base units,
+                appending prefices and plurals.
+
