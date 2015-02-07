@@ -1,15 +1,17 @@
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
 
 int main()
 {
-    char buf[1000];
+    string buf;
     srand(time(0));
-    while(gets(buf)) {
-	if(*buf) buf[rand()%strlen(buf)] ^= 1;
-	puts(buf);
+    while(getline(cin, buf)) {
+	if(!buf.empty()) buf[rand()%buf.length()] ^= 1;
+	cout << buf << endl;
     }
 }
