@@ -77,10 +77,9 @@ struct trie : trie_storage, Link<trie<T,Link,Reduced,Key>, Key>, value<T> {
         return true;
     }
 
-    const trie* search(const char* str) 
+    const trie* search(const char* str, size_t ofs=0)
     {
         trie* cur_trie = this;
-	size_t ofs = 0;
         do if(cur_trie->search_key && cur_trie->match_tail(str,ofs))
             return cur_trie;
         else
@@ -171,10 +170,9 @@ struct simple_trie : Link<simple_trie<T,Link,Key>, Key>, value<T> {
 	return str[i] == '\0';
     }
 
-    const simple_trie* search(const char* str)
+    const simple_trie* search(const char* str, size_t ofs=0)
     {
         simple_trie* cur_trie = this;
-	size_t ofs = 0;
         do if(cur_trie->search_key && str[ofs] == '\0')
             return cur_trie;
         else

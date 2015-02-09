@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+#include <cassert>
 
  // speed up the first lookup in a trie by using an array
 
@@ -19,18 +20,21 @@ struct turbo {
 
     const T* search(const char* str)
     {
-	assert(dict);
 	key_type(' ');
         if(dict->search_key && dict->match_tail(str,0))
             return dict;
         else {
 	    if(T* entry = lut[*str&0xFF]) 
-		return entry->search(str+1);
-	    else if(*str) {
+		return entry->search(str, 1);
+	    else {
 		std::size_t ofs = 0;
-		return (lut[*str&0xFF]=dict->find_node(str,ofs))->search(str+1);
-	    } else
-		return 0;
+		if(T* entry = dict->find_node(str,ofs)) {
+		    assert(ofs == 1);
+		    lut[*str&0xFF] = entry;
+		    return entry->search(str,1);
+		}
+	    }
+	    return 0;
 	}
     }
 
