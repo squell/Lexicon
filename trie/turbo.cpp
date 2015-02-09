@@ -29,9 +29,9 @@ struct turbo {
 	    else {
 		std::size_t ofs = 0;
 		if(T* entry = dict->find_node(str,ofs)) {
-		    assert(ofs == 1);
-		    lut[*str&0xFF] = entry;
-		    return entry->search(str,1);
+		    if(sizeof(key_type)==1 || ofs==1)
+			lut[*str&0xFF] = entry;
+		    return entry->search(str, ofs);
 		}
 	    }
 	    return 0;
