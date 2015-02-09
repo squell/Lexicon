@@ -1,5 +1,7 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 #include "../environ.h"
-#include <string>
 #ifdef HASHMAP
 #include <tr1/unordered_set>
 using namespace std::tr1;

@@ -1,12 +1,10 @@
+#include <climits>
+#include <cstdio>
 #include <map>
-#include <vector>
-#include <utility>
-#include <algorithm>
-#include <string>
-#include <limits.h>
 #include "../trie/basis.cpp"
 #include "../trie/impl/vector.cpp"
 #include "../util/containers.h"
+#include "../environ.h"
 
 /* 
   Calculate a generalized n -> n edit distance between two given strings,

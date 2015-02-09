@@ -1,8 +1,11 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "../environ.h"
+
 #ifndef HASH
 #define HASH fixed
 #endif
-#include "../environ.h"
-
 #define foo_str1(arg) #arg
 #define foo_str2(a,b) foo_str1(a ## b)
 #define foo_str3(a,b) foo_str2(a, b)

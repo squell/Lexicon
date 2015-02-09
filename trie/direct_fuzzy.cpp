@@ -10,6 +10,8 @@
 #include <set>
 #include <tr1/unordered_set>
 #include <fstream>
+#include <ctype.h>
+#include <string.h>
 
 #include "impl/base.h"
 
